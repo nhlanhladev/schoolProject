@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="EN" xml:lang="en">
+
+<head>
+    <title>Task1</title>
+</head>
+
+<body>
+    <?php include "menu.inc";?>
+    //////////////////////////Task1(a) //////////////////
+    <h1>Actors</h1>
+    <p>its a table that represent actors his/her real names and actors/characters notes he will playing .</p>
+
+    <h1>RolesType</h1>
+    <p>represents actors role they will be playing in a film example as a thug..</p>
+
+
+    <h1>FilmActorsRole</h1>
+    <p> film actors role represents the characters names of actors and
+        info about the character age example where she is from .</p>
+
+    <h1>FilmTitles</h1>
+    <p> the name of the film and how long it will be playing in the screen, and what is the film all about .</p>
+
+
+    <h1>Primary keys</h1>
+    <ol>
+        <li>Actors :ActorsID</li><br>
+        <li>RolesType:RoleTypeID</li><br>
+        <li>FilmTitles:FIlmTitleID</li>
+    </ol>
+
+    <br>
+    <h1>Foreign keys Table --FilmActorsRoles</h1>
+    <ol>
+        <li>FIlmTitleID</li><br>
+        <li>ActorsID</li><br>
+        <li>RoleTypeID</li>
+
+    </ol>
+
+
+    <?php
+
+?>
+
+
+</body>
+
+</html>

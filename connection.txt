@@ -1,0 +1,9 @@
+ $host = "localhost";
+ $username = "id21148807_workforce";
+ $password = "Rqhb@6981";
+ $dbname = "id21148807_assignment3project";
+
+
+
+
+

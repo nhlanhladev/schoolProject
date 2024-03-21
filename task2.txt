@@ -1,0 +1,120 @@
+
+
+<!DOCTYPE html>
+<html lang="EN" xml:lang="en">
+
+<head>
+    <title>SELECT Query Results</title>
+</head>
+
+<body>
+    <?php
+     include 'menu.inc';
+    // Replace these database connection details with your actual database credentials
+    $server = "localhost:8889";
+    $username = "root";
+    $password = "root";
+    $dbname = "assignment3";
+
+    // Create connection
+    $conn = new mysqli($server, $username,$password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Function to execute and display a SELECT query result in an HTML table
+    function displayQueryResult($conn, $query) {
+        $result = $conn->query($query);
+        if ($result !== false && $result->num_rows > 0) {
+            echo "<h2>Query Results:</h2>";
+            echo "<table border='1'>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                foreach ($row as $value) {
+                    echo "<td>" . $value . "</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "No results found.";
+        }
+    }
+    ?>
+
+
+    <?php
+    // Fetch and display the contents of all five database tables
+    // $tables = array("generalLedgerAccounts", "invoiceLineItems", "invoices", "terms", "vendors");
+
+    // foreach ($tables as $table) {
+    //     echo "<h2>$table Table:</h2>";
+    //     $query = "SELECT * FROM $table";
+    //     displayQueryResult($conn, $query);
+    // }
+    ?> -->
+
+    <h1>Select a Query to View Results:</h1>
+    <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <input type="radio" name="query" value="query1" id="query1">
+        <label for="query1">Query 1 (ORDER BY)</label><br>
+
+        <input type="radio" name="query" value="query2" id="query2">
+        <label for="query2">Query 2 (Using LIKE Operator)</label><br>
+
+        <input type="radio" name="query" value="query3" id="query3">
+        <label for="query3">Query 3 (Inner Join)</label><br>
+
+        <input type="radio" name="query" value="query4" id="query4">
+        <label for="query4">Query 4 (WHERE Clause with OR)</label><br>
+
+        <input type="radio" name="query" value="query5" id="query5">
+        <label for="query5">Query 5 (Aggregate Function MAX)</label><br>
+
+        <input type="submit" name="submit" value="View Results">
+    </form>
+
+    <?php
+
+     
+    // Handle form submission
+    if (isset($_GET['submit'])) {
+        // Get the selected query value
+        $selectedQuery = $_GET["query"];
+
+        switch ($selectedQuery) {
+            case "query1":
+                $query = "SELECT * FROM generalLedgerAccounts ORDER BY accountDescription";
+                break;
+            case "query2":
+                $query = "SELECT * FROM invoiceLineItems WHERE lineItemDescription LIKE '%a%'";
+                break;
+            case "query3":
+                $query = "SELECT invoices.invoiceID,vendors.vendorName
+                          FROM invoices
+                          INNER JOIN vendors ON invoices.vendorID = vendors.vendorID ";
+                          
+                break;
+            case "query4":
+                $query = "SELECT * FROM terms WHERE 	termsID  = 1 OR 	termsID = 2";
+                break;
+            case "query5":
+                $query = "SELECT MAX(	vendorZipCode) AS max_vendorZipCode FROM vendors";
+                break;
+            default:
+                echo "Please select a query.";
+                exit;
+        }
+
+        // Execute and display the selected query result
+        displayQueryResult($conn, $query);
+    }
+
+    // Close the database connection
+    $conn->close();
+    ?>
+</body>
+
+</html>
